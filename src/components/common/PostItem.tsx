@@ -6,8 +6,8 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import PostThumbnail from './PostThumbnail';
+import {useAppStackNavigation} from '../../navigation/AppStack';
 
 type PostItemProps = PropsWithChildren<{
   post: {
@@ -17,15 +17,16 @@ type PostItemProps = PropsWithChildren<{
     score: number;
     num_comments: number;
     created: number;
+    url: string;
   };
 }>;
 
 function PostItem({post}: PostItemProps): JSX.Element {
-  const {navigate} = useNavigation();
+  const {navigate} = useAppStackNavigation();
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigate('WebView')}>
+      onPress={() => navigate('WebView', {uri: post.url})}>
       <View style={styles.leftContainer}>
         <PostThumbnail postThumbnail={post.thumbnail} />
       </View>

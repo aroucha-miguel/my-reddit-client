@@ -1,12 +1,10 @@
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import WebView from 'react-native-webview';
+import {WebViewProps} from '../../navigation/AppStack';
 
-function WebViewScreen(): JSX.Element {
-  return (
-    <SafeAreaView>
-      <Text>temp screen</Text>
-    </SafeAreaView>
-  );
+function WebViewScreen({route}: WebViewProps): JSX.Element {
+  const {uri} = route.params;
+  return <WebView source={{uri}} />;
 }
 
 export default WebViewScreen;
