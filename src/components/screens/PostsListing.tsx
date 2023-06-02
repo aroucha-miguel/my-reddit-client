@@ -1,48 +1,46 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
-import listPosts from '../../services/reddit/subredditListing';
+import React, {useCallback, useEffect} from 'react';
+import {FlatList, SafeAreaView} from 'react-native';
+import {fetchPosts, fetchMorePosts} from '../../redux/postsListingSlice';
 import PostItem from '../common/PostItem';
 import EmptyContent from '../common/EmptyContent';
 import ItemSeparator from '../common/ItemSeparator';
+import LoadingMorePosts from '../common/LoadingMorePosts';
+import {useAppDispatch, useAppSelector} from '../../redux/store';
 
 function PostsListing(): JSX.Element {
-  const [loading, setLoading] = useState(false);
-  const [posts, setPosts] = useState([]);
+  const {loading, loadingMore, posts} = useAppSelector(
+    state => state.postsListing,
+  );
+  const dispatch = useAppDispatch();
   const loadPosts = useCallback(async () => {
     if (!loading) {
-      try {
-        const data = await listPosts();
-        // console.log(data);
-        setPosts(data.data.children);
-      } catch (error) {
-        // TODO: handle error
-      }
-      setLoading(false);
+      dispatch(fetchPosts());
     }
-  }, [loading]);
+  }, [loading, dispatch]);
+  const loadMorePosts = useCallback(async () => {
+    if (!loading && !loadingMore) {
+      dispatch(fetchMorePosts());
+    }
+  }, [loading, loadingMore, dispatch]);
   useEffect(() => {
     loadPosts();
-  }, [loadPosts]);
+  }, []);
   return (
     <SafeAreaView>
       <FlatList
         data={posts}
         refreshing={loading}
         onRefresh={loadPosts}
+        onEndReached={loadMorePosts}
+        onEndReachedThreshold={0.2}
         keyExtractor={({data}) => data.id}
         renderItem={({item: {data}}) => <PostItem post={data} />}
-        ItemSeparatorComponent={() => <ItemSeparator />}
-        ListEmptyComponent={() => <EmptyContent />}
+        ItemSeparatorComponent={ItemSeparator}
+        ListEmptyComponent={EmptyContent}
+        ListFooterComponent={LoadingMorePosts({isLoadingMore: loadingMore})}
       />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-});
 
 export default PostsListing;

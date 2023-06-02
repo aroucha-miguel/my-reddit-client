@@ -1,7 +1,7 @@
 import client from './client';
 
-const listPosts = ({subreddit = 'pics', sort = 'hot'} = {}) => {
-  return client({path: `r/${subreddit}/${sort}.json`});
+const listPosts = ({subreddit = 'pics', sort = 'hot', after = ''} = {}) => {
+  return client({path: `r/${subreddit}/${sort}.json?after=${after}`});
 };
 
 export default listPosts;

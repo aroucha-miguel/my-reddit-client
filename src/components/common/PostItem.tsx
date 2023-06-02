@@ -23,11 +23,9 @@ function PostItem({post}: PostItemProps): JSX.Element {
         <Text>{post?.title}</Text>
         <Text style={styles.authorText}>u/{post?.author}</Text>
         <View style={styles.dataContainer}>
-          <Text>⇧{post?.score}</Text>
-          <Text>|</Text>
-          <Text>{post?.num_comments} comments</Text>
-          <Text>|</Text>
-          <Text>{post?.created}</Text>
+          <Text>⇧ {post?.score}</Text>
+          <Text>🗨 {post?.num_comments}</Text>
+          <Text>⏲ {post?.created}</Text>
         </View>
       </View>
     </View>
@@ -49,10 +47,12 @@ const styles = StyleSheet.create({
   },
   authorText: {
     fontWeight: '200',
+    paddingTop: 2,
+    paddingBottom: 2,
   },
   dataContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
 });
 
