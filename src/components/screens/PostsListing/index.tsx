@@ -1,31 +1,13 @@
-import React, {useCallback, useEffect} from 'react';
+import React from 'react';
 import {FlatList, SafeAreaView} from 'react-native';
-import {fetchPosts, fetchMorePosts} from '../../../redux/postsListingSlice';
 import PostItem from './PostItem';
 import EmptyContent from '../../common/EmptyContent';
 import ItemSeparator from '../../common/ItemSeparator';
 import LoadingMorePosts from '../../common/LoadingMorePosts';
-import {useAppDispatch, useAppSelector} from '../../../redux/store';
+import usePosts from './hooks/usePosts';
 
 function PostsListingScreen(): JSX.Element {
-  const {loading, loadingMore, posts} = useAppSelector(
-    state => state.postsListing,
-  );
-  const dispatch = useAppDispatch();
-  const loadPosts = useCallback(async () => {
-    if (!loading) {
-      dispatch(fetchPosts());
-    }
-  }, [loading, dispatch]);
-  const loadMorePosts = useCallback(async () => {
-    if (!loading && !loadingMore) {
-      // @ts-ignore
-      dispatch(fetchMorePosts());
-    }
-  }, [loading, loadingMore, dispatch]);
-  useEffect(() => {
-    loadPosts();
-  }, []);
+  const {posts, loading, loadingMore, loadPosts, loadMorePosts} = usePosts();
   return (
     <SafeAreaView>
       <FlatList
