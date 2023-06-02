@@ -12,7 +12,7 @@ export const fetchPosts = createAsyncThunk(
 
 export const fetchMorePosts = createAsyncThunk<any, string, {state: RootState}>(
   'postsListing/fetchMorePosts',
-  async (args, thunkAPI) => {
+  async (_arg, thunkAPI) => {
     const {after} = thunkAPI.getState().postsListing;
     const response = await subredditListing({after});
     return {posts: response.data.children, after: response.data.after};

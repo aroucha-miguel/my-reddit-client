@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import PostThumbnail from './PostThumbnail';
-import {useAppStackNavigation} from '../../navigation/AppStack';
+import {useAppStackNavigation} from '../../../../navigation/AppStack';
 
 type PostItemProps = PropsWithChildren<{
   post: {
