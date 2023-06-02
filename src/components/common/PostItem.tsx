@@ -1,5 +1,12 @@
 import React, {PropsWithChildren} from 'react';
-import {Text, View, StyleSheet, Dimensions} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import PostThumbnail from './PostThumbnail';
 
 type PostItemProps = PropsWithChildren<{
@@ -14,8 +21,11 @@ type PostItemProps = PropsWithChildren<{
 }>;
 
 function PostItem({post}: PostItemProps): JSX.Element {
+  const {navigate} = useNavigation();
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => navigate('WebView')}>
       <View style={styles.leftContainer}>
         <PostThumbnail postThumbnail={post.thumbnail} />
       </View>
@@ -28,7 +38,7 @@ function PostItem({post}: PostItemProps): JSX.Element {
           <Text>⏲ {post?.created}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

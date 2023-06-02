@@ -7,7 +7,7 @@ import ItemSeparator from '../common/ItemSeparator';
 import LoadingMorePosts from '../common/LoadingMorePosts';
 import {useAppDispatch, useAppSelector} from '../../redux/store';
 
-function PostsListing(): JSX.Element {
+function PostsListingScreen(): JSX.Element {
   const {loading, loadingMore, posts} = useAppSelector(
     state => state.postsListing,
   );
@@ -43,4 +43,4 @@ function PostsListing(): JSX.Element {
   );
 }
 
-export default PostsListing;
+export default PostsListingScreen;
