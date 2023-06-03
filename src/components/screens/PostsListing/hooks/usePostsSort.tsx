@@ -22,7 +22,9 @@ function usePostsSort() {
       selectedIndex => {
         if (selectedIndex === 0 || selectedIndex) {
           if (selectedIndex < cancelButtonIndex) {
-            dispatch(updatePostsSort(options[selectedIndex]));
+            if (sort !== options[selectedIndex]) {
+              dispatch(updatePostsSort(options[selectedIndex]));
+            }
           }
         }
       },
