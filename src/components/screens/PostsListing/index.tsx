@@ -5,8 +5,10 @@ import EmptyContent from '../../common/EmptyContent';
 import ItemSeparator from '../../common/ItemSeparator';
 import LoadingMorePosts from '../../common/LoadingMorePosts';
 import usePosts from './hooks/usePosts';
+import useSubredditName from './hooks/useSubredditName';
 
 function PostsListingScreen(): JSX.Element {
+  useSubredditName();
   const {posts, loading, loadingMore, loadPosts, loadMorePosts} = usePosts();
   return (
     <SafeAreaView style={styles.container}>
