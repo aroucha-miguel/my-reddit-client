@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import PostThumbnail from './PostThumbnail';
 import {useAppStackNavigation} from '../../../../navigation/AppStack';
+import RelativeDateTime from '../../../common/RelativeDateTime';
 
 type PostItemProps = PropsWithChildren<{
   post: {
@@ -36,7 +37,7 @@ function PostItem({post}: PostItemProps): JSX.Element {
         <View style={styles.dataContainer}>
           <Text>⇧ {post?.score}</Text>
           <Text>🗨 {post?.num_comments}</Text>
-          <Text>⏲ {post?.created}</Text>
+          <RelativeDateTime created={post?.created} />
         </View>
       </View>
     </TouchableOpacity>
