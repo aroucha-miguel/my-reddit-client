@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, SafeAreaView} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
 import PostItem from './PostItem';
 import EmptyContent from '../../common/EmptyContent';
 import ItemSeparator from '../../common/ItemSeparator';
@@ -9,7 +9,7 @@ import usePosts from './hooks/usePosts';
 function PostsListingScreen(): JSX.Element {
   const {posts, loading, loadingMore, loadPosts, loadMorePosts} = usePosts();
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={posts}
         refreshing={loading}
@@ -25,5 +25,11 @@ function PostsListingScreen(): JSX.Element {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default PostsListingScreen;

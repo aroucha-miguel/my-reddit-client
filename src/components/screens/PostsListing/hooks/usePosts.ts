@@ -13,11 +13,11 @@ function usePosts() {
     }
   }, [loading, dispatch]);
   const loadMorePosts = useCallback(() => {
-    if (!loading && !loadingMore) {
+    if (!loading && !loadingMore && posts.length) {
       // @ts-ignore
       dispatch(fetchMorePosts());
     }
-  }, [loading, loadingMore, dispatch]);
+  }, [loading, loadingMore, posts.length, dispatch]);
   useEffect(() => {
     loadPosts();
   }, []);

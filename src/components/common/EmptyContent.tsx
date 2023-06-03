@@ -11,6 +11,7 @@ function EmptyContent(): JSX.Element {
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
     padding: 8,
   },
 });
