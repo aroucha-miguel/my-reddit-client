@@ -9,6 +9,7 @@ function usePosts() {
   const dispatch = useAppDispatch();
   const loadPosts = useCallback(() => {
     if (!loading) {
+      // @ts-ignore
       dispatch(fetchPosts());
     }
   }, [loading, dispatch]);
