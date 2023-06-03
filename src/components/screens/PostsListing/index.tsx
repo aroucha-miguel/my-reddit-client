@@ -6,10 +6,12 @@ import ItemSeparator from '../../common/ItemSeparator';
 import LoadingMorePosts from '../../common/LoadingMorePosts';
 import usePosts from './hooks/usePosts';
 import useSubredditName from './hooks/useSubredditName';
+import usePostsSort from './hooks/usePostsSort';
 
 function PostsListingScreen(): JSX.Element {
   useSubredditName();
   const {posts, loading, loadingMore, loadPosts, loadMorePosts} = usePosts();
+  usePostsSort();
   return (
     <SafeAreaView style={styles.container}>
       <FlatList

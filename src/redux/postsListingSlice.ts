@@ -4,8 +4,9 @@ import {RootState} from './store';
 
 export const fetchPosts = createAsyncThunk(
   'postsListing/fetchPosts',
-  async () => {
-    const response = await subredditListing();
+  async (_arg, thunkAPI) => {
+    const {sort} = thunkAPI.getState().postsListing;
+    const response = await subredditListing({sort});
     return {posts: response.data.children, after: response.data.after};
   },
 );
@@ -13,9 +14,21 @@ export const fetchPosts = createAsyncThunk(
 export const fetchMorePosts = createAsyncThunk<any, string, {state: RootState}>(
   'postsListing/fetchMorePosts',
   async (_arg, thunkAPI) => {
-    const {after} = thunkAPI.getState().postsListing;
-    const response = await subredditListing({after});
+    const {sort, after} = thunkAPI.getState().postsListing;
+    const response = await subredditListing({sort, after});
     return {posts: response.data.children, after: response.data.after};
+  },
+);
+
+export const updatePostsSort = createAsyncThunk(
+  'postsListing/updatePostsSort',
+  async (arg: string) => {
+    const response = await subredditListing({sort: arg});
+    return {
+      posts: response.data.children,
+      sort: arg,
+      after: response.data.after,
+    };
   },
 );
 
@@ -24,6 +37,8 @@ export const postsListingSlice = createSlice({
   initialState: {
     loading: false,
     loadingMore: false,
+    subreddit: 'pics',
+    sort: 'hot',
     posts: [],
     after: '',
     error: '',
@@ -59,6 +74,20 @@ export const postsListingSlice = createSlice({
       })
       .addCase(fetchMorePosts.rejected, (state, action) => {
         state.loadingMore = false;
+        state.error = action.error.message || '';
+      })
+      // updatePostsSort
+      .addCase(updatePostsSort.pending, state => {
+        state.loading = true;
+      })
+      .addCase(updatePostsSort.fulfilled, (state, action) => {
+        state.loading = false;
+        state.after = action.payload.after;
+        state.posts = action.payload.posts;
+        state.sort = action.payload.sort;
+      })
+      .addCase(updatePostsSort.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.error.message || '';
       });
   },
