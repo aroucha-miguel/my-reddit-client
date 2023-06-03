@@ -1,8 +1,9 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import subredditListing from '../services/reddit/subredditListing';
 import {RootState} from './store';
+import sortsConst from '../utils/sortsConst';
 
-export const fetchPosts = createAsyncThunk(
+export const fetchPosts = createAsyncThunk<any, string, {state: RootState}>(
   'postsListing/fetchPosts',
   async (_arg, thunkAPI) => {
     const {sort} = thunkAPI.getState().postsListing;
@@ -38,7 +39,7 @@ export const postsListingSlice = createSlice({
     loading: false,
     loadingMore: false,
     subreddit: 'pics',
-    sort: 'hot',
+    sort: sortsConst.hot,
     posts: [],
     after: '',
     error: '',

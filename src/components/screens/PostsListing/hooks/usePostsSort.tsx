@@ -4,6 +4,7 @@ import {useActionSheet} from '@expo/react-native-action-sheet';
 import {useAppDispatch, useAppSelector} from '../../../../redux/store';
 import {useAppStackNavigation} from '../../../../navigation/AppStack';
 import {updatePostsSort} from '../../../../redux/postsListingSlice';
+import sortsConst from '../../../../utils/sortsConst';
 
 function usePostsSort() {
   const {showActionSheetWithOptions} = useActionSheet();
@@ -11,37 +12,22 @@ function usePostsSort() {
   const {sort} = useAppSelector(state => state.postsListing);
   const dispatch = useAppDispatch();
   const selectSort = useCallback(() => {
-    const options = ['hot', 'top', 'new', 'controversial', 'cancel'];
-    const cancelButtonIndex = options.length - 1;
+    const options = Object.values(sortsConst);
+    const cancelButtonIndex = options.length;
     showActionSheetWithOptions(
       {
-        options,
+        options: [...options, 'cancel'],
         cancelButtonIndex,
       },
       selectedIndex => {
-        switch (selectedIndex) {
-          case 0:
-            dispatch(updatePostsSort('hot'));
-            break;
-
-          case 1:
-            dispatch(updatePostsSort('top'));
-            break;
-
-          case 2:
-            dispatch(updatePostsSort('new'));
-            break;
-
-          case 3:
-            dispatch(updatePostsSort('controversial'));
-            break;
-
-          case cancelButtonIndex:
-            console.log('cancel');
+        if (selectedIndex === 0 || selectedIndex) {
+          if (selectedIndex < cancelButtonIndex) {
+            dispatch(updatePostsSort(options[selectedIndex]));
+          }
         }
       },
     );
-  }, [showActionSheetWithOptions]);
+  }, [showActionSheetWithOptions, dispatch]);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => <Text onPress={selectSort}>{sort}</Text>,
