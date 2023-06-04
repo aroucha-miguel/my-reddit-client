@@ -2,6 +2,7 @@ import React, {PropsWithChildren, useState} from 'react';
 import {StyleSheet, Image} from 'react-native';
 import EmptyThumbnail from './EmptyThumbnail';
 import NSFWThumbnail from './NSFWThumbnail';
+import SpoilerThumbnail from './SpoilerThumbnail';
 
 type PostThumbnailProps = PropsWithChildren<{
   postThumbnail: string;
@@ -14,6 +15,9 @@ function PostThumbnail({postThumbnail}: PostThumbnailProps): JSX.Element {
   }
   if (postThumbnail === 'nsfw') {
     return <NSFWThumbnail />;
+  }
+  if (postThumbnail === 'spoiler') {
+    return <SpoilerThumbnail />;
   }
   if (postThumbnail) {
     return (

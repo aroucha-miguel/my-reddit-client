@@ -1,10 +1,10 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 
-function NSFWThumbnail(): JSX.Element {
+function SpoilerThumbnail(): JSX.Element {
   return (
     <View style={styles.container}>
-      <Text>NSFW</Text>
+      <Text>Spoiler</Text>
     </View>
   );
 }
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NSFWThumbnail;
+export default SpoilerThumbnail;
