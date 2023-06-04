@@ -6,8 +6,8 @@ import sortsConst from '../utils/sortsConst';
 export const fetchPosts = createAsyncThunk<any, string, {state: RootState}>(
   'postsListing/fetchPosts',
   async (_arg, thunkAPI) => {
-    const {sort} = thunkAPI.getState().postsListing;
-    const response = await subredditListing({sort});
+    const {subreddit, sort} = thunkAPI.getState().postsListing;
+    const response = await subredditListing({subreddit, sort});
     return {posts: response.data.children, after: response.data.after};
   },
 );
@@ -15,23 +15,25 @@ export const fetchPosts = createAsyncThunk<any, string, {state: RootState}>(
 export const fetchMorePosts = createAsyncThunk<any, string, {state: RootState}>(
   'postsListing/fetchMorePosts',
   async (_arg, thunkAPI) => {
-    const {sort, after} = thunkAPI.getState().postsListing;
-    const response = await subredditListing({sort, after});
+    const {subreddit, sort, after} = thunkAPI.getState().postsListing;
+    const response = await subredditListing({subreddit, sort, after});
     return {posts: response.data.children, after: response.data.after};
   },
 );
 
-export const updatePostsSort = createAsyncThunk(
-  'postsListing/updatePostsSort',
-  async (arg: string) => {
-    const response = await subredditListing({sort: arg});
-    return {
-      posts: response.data.children,
-      sort: arg,
-      after: response.data.after,
-    };
-  },
-);
+export const updatePostsSort = createAsyncThunk<
+  any,
+  string,
+  {state: RootState}
+>('postsListing/updatePostsSort', async (arg: string, thunkAPI) => {
+  const {subreddit} = thunkAPI.getState().postsListing;
+  const response = await subredditListing({subreddit, sort: arg});
+  return {
+    posts: response.data.children,
+    sort: arg,
+    after: response.data.after,
+  };
+});
 
 export const postsListingSlice = createSlice({
   name: 'postsListing',
