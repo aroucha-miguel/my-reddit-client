@@ -1,9 +1,14 @@
 import {useCallback, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../../redux/store';
-import {fetchMorePosts, fetchPosts} from '../../../../redux/postsListingSlice';
+import {
+  clearError,
+  fetchMorePosts,
+  fetchPosts,
+} from '../../../../redux/postsListingSlice';
+import useErrorFeedback from '../../../common/hooks/useErrorFeedback';
 
 function usePosts() {
-  const {loading, loadingMore, posts} = useAppSelector(
+  const {loading, loadingMore, posts, error} = useAppSelector(
     state => state.postsListing,
   );
   const dispatch = useAppDispatch();
@@ -22,6 +27,7 @@ function usePosts() {
   useEffect(() => {
     loadPosts();
   }, []);
+  useErrorFeedback(error, () => dispatch(clearError()));
   return {
     loading,
     loadingMore,

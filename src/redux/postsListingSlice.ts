@@ -139,6 +139,6 @@ export const postsListingSlice = createSlice({
   },
 });
 
-// export const {clearError} = postsListingSlice.actions;
+export const {clearError} = postsListingSlice.actions;
 
 export default postsListingSlice.reducer;
