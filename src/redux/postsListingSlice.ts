@@ -36,6 +36,21 @@ export const updatePostsSort = createAsyncThunk<
   };
 });
 
+export const updatePostsSubredditAndSort = createAsyncThunk<
+  any,
+  {subreddit: string; sort: string},
+  {state: RootState}
+>('postsListing/updatePostsSubredditAndSort', async arg => {
+  const {subreddit, sort} = arg;
+  const response = await subredditListing({subreddit, sort});
+  return {
+    posts: response.data.children,
+    subreddit,
+    sort,
+    after: response.data.after,
+  };
+});
+
 interface PostsListingState {
   loading: boolean;
   loadingMore: boolean;
@@ -103,6 +118,21 @@ export const postsListingSlice = createSlice({
         state.sort = action.payload.sort;
       })
       .addCase(updatePostsSort.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || '';
+      })
+      // updatePostsSubredditAndSort
+      .addCase(updatePostsSubredditAndSort.pending, state => {
+        state.loading = true;
+      })
+      .addCase(updatePostsSubredditAndSort.fulfilled, (state, action) => {
+        state.loading = false;
+        state.after = action.payload.after;
+        state.subreddit = action.payload.subreddit;
+        state.posts = action.payload.posts;
+        state.sort = action.payload.sort;
+      })
+      .addCase(updatePostsSubredditAndSort.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || '';
       });

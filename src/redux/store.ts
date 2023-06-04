@@ -1,10 +1,12 @@
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {configureStore} from '@reduxjs/toolkit';
 import postsListingReducer from './postsListingSlice';
-import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import subredditsListingReducer from './subredditsListingSlice';
 
 const store = configureStore({
   reducer: {
     postsListing: postsListingReducer,
+    subredditsListing: subredditsListingReducer,
   },
 });
 export default store;

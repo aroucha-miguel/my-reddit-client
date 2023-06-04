@@ -32,7 +32,7 @@ function usePostsSort() {
   }, [sort, showActionSheetWithOptions, dispatch]);
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => <Text onPress={selectSort}>{sort}</Text>,
+      headerLeft: () => <Text onPress={selectSort}>Sort: {sort}</Text>,
     });
   }, [sort, selectSort, navigation]);
 }
