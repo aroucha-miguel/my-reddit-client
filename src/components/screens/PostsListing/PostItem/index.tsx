@@ -1,4 +1,4 @@
-import React, {PropsWithChildren} from 'react';
+import React, {memo, PropsWithChildren} from 'react';
 import {
   Text,
   View,
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostItem;
+export default memo(PostItem);
