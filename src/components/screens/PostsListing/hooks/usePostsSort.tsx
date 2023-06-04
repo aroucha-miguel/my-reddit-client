@@ -29,7 +29,7 @@ function usePostsSort() {
         }
       },
     );
-  }, [showActionSheetWithOptions, dispatch]);
+  }, [sort, showActionSheetWithOptions, dispatch]);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => <Text onPress={selectSort}>{sort}</Text>,
