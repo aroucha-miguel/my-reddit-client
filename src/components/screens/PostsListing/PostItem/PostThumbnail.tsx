@@ -14,14 +14,17 @@ function PostThumbnail({postThumbnail}: PostThumbnailProps): JSX.Element {
   if (postThumbnail === 'nsfw') {
     return <NSFWThumbnail />;
   }
-  return (
-    <Image
-      style={styles.image}
-      source={{
-        uri: postThumbnail,
-      }}
-    />
-  );
+  if (postThumbnail) {
+    return (
+      <Image
+        style={styles.image}
+        source={{
+          uri: postThumbnail,
+        }}
+      />
+    );
+  }
+  return <EmptyThumbnail />;
 }
 
 const styles = StyleSheet.create({
