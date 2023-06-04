@@ -9,17 +9,10 @@ import {
 import PostThumbnail from './PostThumbnail';
 import {useAppStackNavigation} from '../../../../navigation/AppStack';
 import RelativeDateTime from '../../../common/RelativeDateTime';
+import {Post} from '../../../../types/Post';
 
 type PostItemProps = PropsWithChildren<{
-  post: {
-    thumbnail: string;
-    title: string;
-    author: string;
-    score: number;
-    num_comments: number;
-    created: number;
-    url: string;
-  };
+  post: Post;
 }>;
 
 function PostItem({post}: PostItemProps): JSX.Element {

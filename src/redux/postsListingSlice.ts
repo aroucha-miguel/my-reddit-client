@@ -2,6 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import subredditListing from '../services/reddit/subredditListing';
 import {RootState} from './store';
 import sortsConst from '../utils/sortsConst';
+import {NetworkPost} from '../types/Post';
 
 export const fetchPosts = createAsyncThunk<any, string, {state: RootState}>(
   'postsListing/fetchPosts',
@@ -35,17 +36,29 @@ export const updatePostsSort = createAsyncThunk<
   };
 });
 
+interface PostsListingState {
+  loading: boolean;
+  loadingMore: boolean;
+  subreddit: string;
+  sort: string;
+  posts: NetworkPost[];
+  after: string;
+  error: string;
+}
+
+const initialState: PostsListingState = {
+  loading: false,
+  loadingMore: false,
+  subreddit: 'pics',
+  sort: sortsConst.hot,
+  posts: [],
+  after: '',
+  error: '',
+};
+
 export const postsListingSlice = createSlice({
   name: 'postsListing',
-  initialState: {
-    loading: false,
-    loadingMore: false,
-    subreddit: 'pics',
-    sort: sortsConst.hot,
-    posts: [],
-    after: '',
-    error: '',
-  },
+  initialState,
   reducers: {
     clearError: state => {
       state.error = '';
