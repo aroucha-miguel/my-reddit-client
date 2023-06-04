@@ -10,7 +10,12 @@ type PostThumbnailProps = PropsWithChildren<{
 
 function PostThumbnail({postThumbnail}: PostThumbnailProps): JSX.Element {
   const [isError, setIsError] = useState(false);
-  if (postThumbnail === 'self' || postThumbnail === 'default' || isError) {
+  if (
+    postThumbnail === 'self' ||
+    postThumbnail === 'default' ||
+    postThumbnail === 'image' ||
+    isError
+  ) {
     return <EmptyThumbnail />;
   }
   if (postThumbnail === 'nsfw') {
