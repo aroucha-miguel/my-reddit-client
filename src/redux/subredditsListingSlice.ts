@@ -7,7 +7,7 @@ interface SubredditsListingState {
 
 const initialState: SubredditsListingState = {
   loading: false,
-  subreddits: ['pics', 'ReactNative', 'Programming'],
+  subreddits: ['pics', 'all', 'ReactNative', 'Programming'],
 };
 
 export const subredditsListingSlice = createSlice({

@@ -1,4 +1,4 @@
-import React, {PropsWithChildren} from 'react';
+import React, {PropsWithChildren, useState} from 'react';
 import {StyleSheet, Image} from 'react-native';
 import EmptyThumbnail from './EmptyThumbnail';
 import NSFWThumbnail from './NSFWThumbnail';
@@ -8,7 +8,8 @@ type PostThumbnailProps = PropsWithChildren<{
 }>;
 
 function PostThumbnail({postThumbnail}: PostThumbnailProps): JSX.Element {
-  if (postThumbnail === 'self') {
+  const [isError, setIsError] = useState(false);
+  if (postThumbnail === 'self' || postThumbnail === 'default' || isError) {
     return <EmptyThumbnail />;
   }
   if (postThumbnail === 'nsfw') {
@@ -21,6 +22,7 @@ function PostThumbnail({postThumbnail}: PostThumbnailProps): JSX.Element {
         source={{
           uri: postThumbnail,
         }}
+        onError={() => setIsError(true)}
       />
     );
   }
